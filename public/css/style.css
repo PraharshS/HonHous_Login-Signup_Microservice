@@ -1,0 +1,140 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+
+}
+
+a,
+a:focus {
+    text-decoration: none;
+    color: #00b7c2;
+}
+
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #00b7c2;
+    flex-direction: column;
+
+}
+
+.form {
+    height: 60%;
+    width: 500px;
+    border-radius: 1.2rem;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: left;
+
+}
+
+.signupform {
+    height: 70%;
+    width: 500px;
+    border-radius: 1.2rem;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: left;
+
+}
+
+.form-group {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2rem;
+    align-items: center;
+
+}
+
+.heading {
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.form-group label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    flex: 1;
+
+}
+
+.form-group input {
+    flex: 2;
+    border: none;
+    border-bottom: 1px solid #1b262c;
+    font-size: 1rem;
+}
+
+.submit {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.submit button {
+    width: 20%;
+    cursor: pointer;
+
+
+    font-size: 1rem;
+    padding: 4px 10px;
+    text-align: center;
+    border: none;
+    background-color: #00b7c2;
+    color: white;
+}
+
+.create {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+
+.create button {
+    width: 30%;
+    cursor: pointer;
+
+
+    font-size: 1rem;
+    padding: 4px 10px;
+    text-align: center;
+    border: none;
+    background-color: #00b7c2;
+    color: white;
+}
+
+.newaccount p {
+    text-align: center;
+    margin: 0 auto;
+}
+
+span {
+    color: #00b7c2 !important;
+}
+
+.alert {
+    display: flex;
+    /* visibility: hidden; */
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+    width: 500px;
+    color: white;
+    border-radius: 1.2rem;
+    height: 50px;
+    margin-top: 10px;
+}
+
+.visible {
+    visibility: visible;
+}

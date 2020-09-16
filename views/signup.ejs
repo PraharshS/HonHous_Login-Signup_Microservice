@@ -1,0 +1,59 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap" rel="stylesheet" />
+    <title>Home</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <form action="/signup" class="signupform" method="POST">
+            <div class="heading">
+                <h2>Create New Account</h2>
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" name="name" placeholder="Enter your name" />
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" placeholder="Enter your username" />
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" placeholder="Enter your email" />
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="number" name="phone" placeholder="Enter your phone numebr" />
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" placeholder="Enter your password" />
+            </div>
+            <div class="form-group">
+                <label for="password2">Confirm Password</label>
+                <input type="password" name="password2" placeholder="Enter your password again" />
+            </div>
+            <div class="create"><button type="submit">Create Account</button></div>
+
+        </form>
+        <div class="alert">
+            <h2>Invalid Credientials</h2>
+        </div>
+
+
+        <% if(error) setTimeout(() => { %>
+        <%    alert.setAttribute("style", "background-color: blue;"); %>
+        <%   }, 3000); %>
+
+
+    </div>
+
+</body>
+
+</html>

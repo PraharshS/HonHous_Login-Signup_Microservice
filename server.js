@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
-const mongoose = require("mongoose");
+
+const bodyParser = require("body-parser");
+const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const connectDB = require("./config/db");
 const User = require("./models/UserSchema");
@@ -11,60 +13,93 @@ app.set("view engine", "ejs");
 
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
-app.use(express.urlencoded({ extended: true }));
-
-app.get("/", (req, res) => {
-  res.render("index", { error: false });
-});
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.get("/signup", (req, res) => {
   res.render("signup", {
-    error: false,
-    alert: document.querySelector(".alert"),
+    alert: [],
+    userData: [],
   });
 });
-
-app.get("/login", (req, res) => {
-  res.render("index");
+app.get("/dashboard", (req, res) => {
+  console.log(req.body);
+  return res.render("dashboard", req.body);
 });
 
-app.post("/signup", async (req, res) => {
-  try {
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
-    const user = new User({
-      name: req.body.name,
-      username: req.body.username,
-      password: hashedPassword,
-      email: req.body.email,
-      phone: req.body.phone,
-    });
-    await user.save();
-    return res.render("index");
-  } catch (error) {
-    res.render("signup", { error: true });
-  }
-
-  //   res.render("login");
+app.get("/", (req, res) => {
+  console.log("//");
+  res.render("index", { error: false });
 });
 
-app.post("/login", async (req, res) => {
-  if (req.body.password !== req.body.password2) {
-    return res.render("signup", { error: true });
+app.post(
+  "/signup",
+  urlencodedParser,
+  [
+    check("name", "Name cannot be empty").exists().isLength({
+      min: 1,
+    }),
+    check("username", "username must be 3+ characters long").exists().isLength({
+      min: 3,
+    }),
+
+    check("email", "Email is not valid").isEmail().normalizeEmail(),
+    check("phone", "Phone Number must contain 10 digits").isLength({
+      min: 10,
+    }),
+    check("password", "password must be 8 characters long").isLength({
+      min: 8,
+    }),
+    check("password2", "passwords must match").matches("password"),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    const { name, username, email, phone, password, password2 } = req.body;
+    if (!errors.isEmpty()) {
+      const userData = { name, username, email, phone, password, password2 };
+      const alert = errors.array();
+      res.render("signup", {
+        alert,
+        userData,
+      });
+    } else {
+      try {
+        const salt = await bcrypt.genSalt();
+        const hashedPassword = await bcrypt.hash(req.body.password, salt);
+        const user = new User({
+          name,
+          username,
+          password: hashedPassword,
+          email,
+          phone,
+        });
+        await user.save();
+        console.log(user);
+        return res.render("index");
+      } catch (error) {
+        res.render("signup", { error: true });
+      }
+    }
   }
+);
+
+app.post("/login", urlencodedParser, async (req, res) => {
   const user = await User.findOne({ username: req.body.username });
+  const ans = await req.body;
+
   if (user == null) {
     // alert("User does not exist !");
-    return res.render("index", { error: true });
+
+    res.render("index", { error: "invalid" });
     // return res.status(400).send("Cannot find user");
   }
   try {
     const isMatched = await bcrypt.compare(req.body.password, user.password);
 
     if (isMatched) {
-      return res.send(user);
+      console.log("matches");
+      return res.redirect("dashboard", { name: user.name });
     } else {
-      return res.render("index", { error: true });
+      res.render("index", { error: true });
     }
   } catch (error) {
     return res.status(500).send();

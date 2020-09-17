@@ -1,59 +1,77 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap" rel="stylesheet" />
-    <title>Home</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap" rel="stylesheet" />
+  <title>Home</title>
 </head>
 
 <body>
-
-    <div class="container">
-        <form action="/signup" class="signupform" method="POST">
-            <div class="heading">
-                <h2>Create New Account</h2>
-            </div>
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" name="name" placeholder="Enter your name" />
-            </div>
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" name="username" placeholder="Enter your username" />
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" name="email" placeholder="Enter your email" />
-            </div>
-            <div class="form-group">
-                <label for="phone">Phone</label>
-                <input type="number" name="phone" placeholder="Enter your phone numebr" />
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" placeholder="Enter your password" />
-            </div>
-            <div class="form-group">
-                <label for="password2">Confirm Password</label>
-                <input type="password" name="password2" placeholder="Enter your password again" />
-            </div>
-            <div class="create"><button type="submit">Create Account</button></div>
-
-        </form>
-        <div class="alert">
-            <h2>Invalid Credientials</h2>
+  <div class="container">
+    <form action="/signup" class="signupform" method="POST">
+      <div class="heading">
+        <h2>Create New Account</h2>
+      </div>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <div class="input-box">
+          <input type="text" name="name" placeholder="Enter your name" value="<%=userData.name%>" />
+          <p class="popup name Notvisible">Name cannot be empty</p>
         </div>
+      </div>
 
+      <div class="form-group">
+        <label for="username">Username</label>
+        <div class="input-box">
+          <input type="text" name="username" placeholder="Enter your username" value="<%=userData.username%>" />
+          <p class="popup username Notvisible">username must be 3+ characters long</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-box">
+          <input type="email" name="email" placeholder="Enter your email" value="<%=userData.email%>" />
+          <p class="popup email Notvisible">Email is not valid</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <div class="input-box">
+          <input type="number" name="phone" placeholder="Enter your phone numebr" value="<%=userData.phone%>" />
+          <p class="popup phone Notvisible">Phone Number must contain 10 digits</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-box">
+          <input type="password" name="password" placeholder="Enter your password" value="<%=userData.password%>" />
+          <p class="popup password Notvisible">password must be 8 characters long</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password2">Confirm Password</label>
+        <div class="input-box">
+          <input type="password" name="password2" placeholder="Enter your password again"
+            value="<%=userData.password2%>" />
+          <p class="popup password2 Notvisible">passwords must match</p>
+        </div>
+      </div>
+      <div class="create"><button type="submit" onclick="click();">Create Account</button></div>
+    </form>
+  </div>
+  <script>
+    let alert = JSON.parse('<%- JSON.stringify(alert) %>');
+    if (alert.length > 0) {
 
-        <% if(error) setTimeout(() => { %>
-        <%    alert.setAttribute("style", "background-color: blue;"); %>
-        <%   }, 3000); %>
-
-
-    </div>
-
+      alert.forEach(popup => {
+        let item = popup.param;
+        item = " ." + item;
+        document.querySelector(item).classList.remove('Notvisible');
+      })
+    }
+  </script>
 </body>
 
 </html>

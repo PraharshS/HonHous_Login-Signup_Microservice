@@ -185,5 +185,16 @@ span {
 
 .dashboard {
     background-color: #00b7c2;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
 
+.dashboard h1 {
+    font-size: 3rem;
+    border: 1px solid white;
+    padding: 4rem;
+    box-shadow: #1b262c 4px 4px 2px;
 }

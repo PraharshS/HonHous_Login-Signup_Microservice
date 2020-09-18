@@ -7,11 +7,14 @@ const bcrypt = require("bcrypt");
 const connectDB = require("./config/db");
 const User = require("./models/UserSchema");
 
+// Connect to MONGO DB
 connectDB();
 
+// Set default template engine
 app.set("view engine", "ejs");
 
 app.use(express.json());
+
 app.use(express.static(__dirname + "/public"));
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -21,13 +24,18 @@ app.get("/signup", (req, res) => {
     userData: [],
   });
 });
+
+// Problem in implementing dashboard page denial without login
 app.get("/dashboard", (req, res) => {
   console.log(req.body);
   return res.render("dashboard", req.body);
 });
 
 app.get("/", (req, res) => {
-  console.log("//");
+  res.render("index", { error: false });
+});
+
+app.get("/login", (req, res) => {
   res.render("index", { error: false });
 });
 
@@ -84,8 +92,6 @@ app.post(
 
 app.post("/login", urlencodedParser, async (req, res) => {
   const user = await User.findOne({ username: req.body.username });
-  const ans = await req.body;
-
   if (user == null) {
     // alert("User does not exist !");
 
@@ -97,7 +103,7 @@ app.post("/login", urlencodedParser, async (req, res) => {
 
     if (isMatched) {
       console.log("matches");
-      return res.redirect("dashboard", { name: user.name });
+      return res.render("dashboard", { name: user.name });
     } else {
       res.render("index", { error: true });
     }
@@ -107,4 +113,4 @@ app.post("/login", urlencodedParser, async (req, res) => {
 });
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => console.log("SERVER STARTED ON PORT 3000"));
+app.listen(PORT, () => console.log("SERVER STARTED ON PORT " + PORT));

@@ -31,7 +31,7 @@ app.get("/dashboard", (req, res) => {
   return res.render("dashboard", req.body);
 });
 
-app.get("/", (req, res) => {
+app.get("", (req, res) => {
   res.render("index", { error: false });
 });
 
@@ -113,6 +113,4 @@ app.post("/login", urlencodedParser, async (req, res) => {
 });
 const PORT = process.env.PORT || 3000;
 
-app.listen(process.env.PORT || PORT, () =>
-  console.log("SERVER STARTED ON PORT " + PORT)
-);
+app.listen(PORT, () => console.log("SERVER STARTED ON PORT " + PORT));

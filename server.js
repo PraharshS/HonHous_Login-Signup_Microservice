@@ -113,4 +113,6 @@ app.post("/login", urlencodedParser, async (req, res) => {
 });
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => console.log("SERVER STARTED ON PORT " + PORT));
+app.listen(process.env.PORT || PORT, () =>
+  console.log("SERVER STARTED ON PORT " + PORT)
+);
